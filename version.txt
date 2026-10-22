@@ -1,3 +1,2 @@
-1.6.0
-Update from GitHub: MENU > Update plugin, or the telnet command.
-Daily check for new versions (MENU > Settings to switch it off).
+1.0
+First public release by reali22.

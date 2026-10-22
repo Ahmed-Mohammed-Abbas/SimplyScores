@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""SimplyScores - TikTok-style football highlights & live scores for Enigma2."""
+"""SimplyScores - TikTok-style football highlights & live scores for Enigma2. Author: reali22."""
 from Components.config import (ConfigInteger, ConfigSelection, ConfigSubsection, ConfigYesNo,
                                config)
 from Plugins.Plugin import PluginDescriptor
@@ -64,7 +64,7 @@ def menu_icon():
 
 
 def Plugins(**kwargs):
-    description = "TikTok-style football highlights & live scores"
+    description = "TikTok-style football highlights & live scores, by reali22"
     return [
         PluginDescriptor(name="SimplyScores", description=description,
                          where=PluginDescriptor.WHERE_PLUGINMENU, icon=menu_icon(), fnc=main),

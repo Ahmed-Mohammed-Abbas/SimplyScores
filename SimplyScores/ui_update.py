@@ -25,7 +25,7 @@ class PluginMenu(Screen):
         self.version = version
         self.update = update
         self["title"] = Label("SimplyScores %s" % version)
-        self["subtitle"] = Label("Football summaries from TikTok, newest first")
+        self["subtitle"] = Label("Football summaries from TikTok, newest first.   By reali22")
         self["list"] = MCList((30, 22), 76)
         self["hint"] = Label("OK open   EXIT back")
         self["actions"] = ActionMap(["OkCancelActions"], {"ok": self.choose, "cancel": self.cancel}, -1)
@@ -164,6 +164,6 @@ class UpdateFlow(object):
 
 
 def about_text(version):
-    return ("SimplyScores %s\nTikTok football summaries and live scores for Enigma2.\n\n"
+    return ("SimplyScores %s by reali22\nTikTok football summaries and live scores for Enigma2.\n\n"
             "GitHub: https://github.com/%s\n\nInstall or update by telnet/SSH:\n%s"
             % (version, updater.REPO, updater.telnet_command()))

@@ -19,7 +19,8 @@ Description: TikTok-style football highlights and live scores
  with live ESPN scores. Uses TikWM or TikTok directly, whichever works.
 Section: extra
 Priority: optional
-Maintainer: Mohammed Mousa
+Maintainer: reali22
+Author: reali22
 Architecture: all
 Depends: python3-requests
 """

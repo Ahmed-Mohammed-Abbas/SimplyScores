@@ -1,4 +1,6 @@
-# SimplyScores 1.6.0 — TikTok-style football feed for Enigma2
+# SimplyScores 1.0 — TikTok-style football feed for Enigma2
+
+**Author: reali22**
 
 A vertical, **newest-first** feed of match summaries and highlights from the TikTok
 channels you choose (e.g. `@kayfa1x_2`), played full screen like TikTok, with an
@@ -13,8 +15,8 @@ from this repository, or updates an older one, then restarts the GUI:
 wget -q --no-check-certificate https://raw.githubusercontent.com/Ahmed-Mohammed-Abbas/SimplyScores/main/installer.sh -O - | /bin/sh
 ```
 
-**By hand:** copy `ipk/enigma2-plugin-extensions-simplyscores_1.6.0_all.ipk` to `/tmp` on the box
-and run `opkg install /tmp/enigma2-plugin-extensions-simplyscores_1.6.0_all.ipk`, then restart
+**By hand:** copy `ipk/enigma2-plugin-extensions-simplyscores_1.0_all.ipk` to `/tmp` on the box
+and run `opkg install /tmp/enigma2-plugin-extensions-simplyscores_1.0_all.ipk`, then restart
 the GUI. Your channel list is kept on updates.
 
 Open **SimplyScores** from the Plugins menu or the BLUE/Extensions menu.
@@ -56,7 +58,7 @@ name a package that exists in `ipk/`.
 ## Preferred channels (first in For You)
 
 Channels marked **TOP** are preferred: when the plugin opens on *For You*, their videos come
-first (newest first), then the videos of your other channels. Updating 1.5.0 adds these
+first (newest first), then the videos of your other channels. The plugin adds these
 preferred channels once, at the top of your list: `@football_actuality10`, `@kayfa1x_2`,
 `@kayfa1x`, `@myintthuhighlights5`, `@ligue1`, `@mouhamedfoot333`, `@zzcombs3`,
 `@koglogrgorden`, plus the channel behind `vt.tiktok.com/ZSgyS93uw/` (read on the box at the
@@ -228,3 +230,7 @@ Source extras: `tools/make_icons.py` (redraws the icons, including the menu icon
 `tools/build_ipk.py` (rebuilds the .ipk), `tests/` (a simulated Enigma2 session against a fake
 internet with a blocked TikWM, TikTok's bot check, share links and a cookie-checking CDN:
 `python3 tests/test_all.py out`, `test_audio_web.py`, `test_channels.py`, `test_preferred.py`, `test_update.py`).
+
+## Credits
+
+SimplyScores is written and maintained by **reali22**.

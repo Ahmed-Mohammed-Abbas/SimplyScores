@@ -113,7 +113,7 @@ scr["actions"].actions["menu"]()
 menu = session.dialogs[-1]
 menu["list"].moveToIndex(3)
 menu["actions"].actions["ok"]()
-check("github.com/Ahmed-Mohammed-Abbas/SimplyScores" in session.dialogs[-1].text
+check("by reali22" in session.dialogs[-1].text and "github.com/Ahmed-Mohammed-Abbas/SimplyScores" in session.dialogs[-1].text
       and "installer.sh -O - | /bin/sh" in session.dialogs[-1].text, "About shows the GitHub page and telnet command")
 scr["actions"].actions["cancel"]()
 
@@ -141,7 +141,7 @@ env = dict(os.environ, PATH=bin_dir + ":" + os.environ["PATH"])
 env.pop("HTTPS_PROXY", None), env.pop("https_proxy", None), env.pop("HTTP_PROXY", None), env.pop("http_proxy", None)
 out = subprocess.run(["sh", local], env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=60).stdout.decode()
 calls = open(log_file).read()
-check("opkg install --force-reinstall /tmp/" + updater.ipk_name(NEW) in calls and "killall -9 enigma2" in calls
+check("opkg install --force-reinstall --force-downgrade /tmp/" + updater.ipk_name(NEW) in calls and "killall -9 enigma2" in calls
       and "SimplyScores %s installed" % NEW in out, "telnet installer downloads, installs and restarts the GUI")
 del world.gh_files["version.txt"]
 open(log_file, "w").close()

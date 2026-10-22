@@ -1,5 +1,5 @@
 #!/bin/sh
-# SimplyScores installer / updater for Enigma2 receivers.
+# SimplyScores installer / updater for Enigma2 receivers. Plugin by reali22.
 # Telnet/SSH:
 #   wget -q --no-check-certificate https://raw.githubusercontent.com/Ahmed-Mohammed-Abbas/SimplyScores/main/installer.sh -O - | /bin/sh
 
@@ -16,7 +16,7 @@ fetch() {   # fetch URL FILE
     return 1
 }
 
-echo "SimplyScores installer"
+echo "SimplyScores installer (plugin by reali22)"
 TMPV=/tmp/simplyscores_version.txt
 if ! fetch "$RAW/version.txt?t=$(date +%s)" "$TMPV"; then
     echo "Could not reach GitHub. Check the receiver's internet connection."
@@ -48,7 +48,7 @@ fi
 # python3-requests comes from the image's feed when it is missing
 python3 -c "import requests" >/dev/null 2>&1 || { opkg update >/dev/null 2>&1; opkg install python3-requests; }
 
-if ! opkg install --force-reinstall "/tmp/$IPK"; then
+if ! opkg install --force-reinstall --force-downgrade "/tmp/$IPK"; then
     echo "opkg could not install $IPK"
     rm -f "/tmp/$IPK"
     exit 1
