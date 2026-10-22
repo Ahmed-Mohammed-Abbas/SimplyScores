@@ -158,8 +158,9 @@ FEED_SKIN = scale_skin("""
 	<widget name="views" position="1282,850" size="140,34" font="Regular;24" halign="center" noWrap="1" foregroundColor="#ffffff" zPosition="3" %(shadow)s />
 	<widget name="disc_icon" pixmap="{icons}/disc.png" position="1317,912" size="70,70" alphatest="blend" zPosition="3" />
 
-	<widget name="position" position="1440,30" size="220,40" font="Regular;24" valign="center" noWrap="1" foregroundColor="#b0b0b0" transparent="1" backgroundColor="#ff000000" zPosition="3" />
-	<widget source="global.CurrentTime" render="Label" position="1660,24" size="220,52" font="Regular;40" halign="right" valign="center" foregroundColor="#ffffff" transparent="1" backgroundColor="#ff000000" zPosition="3">
+	<widget name="credit" position="1440,16" size="300,30" font="Regular;20" valign="center" noWrap="1" foregroundColor="#fe2c55" transparent="1" backgroundColor="#ff000000" zPosition="3" />
+	<widget name="position" position="1440,48" size="240,34" font="Regular;22" valign="center" noWrap="1" foregroundColor="#b0b0b0" transparent="1" backgroundColor="#ff000000" zPosition="3" />
+	<widget source="global.CurrentTime" render="Label" position="1745,24" size="135,52" font="Regular;40" halign="right" valign="center" foregroundColor="#ffffff" transparent="1" backgroundColor="#ff000000" zPosition="3">
 		<convert type="ClockToText">Default</convert>
 	</widget>
 	<widget name="card_next" position="1428,96" size="468,464" backgroundColor="%(card)s" zPosition="1" />

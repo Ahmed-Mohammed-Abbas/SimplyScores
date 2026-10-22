@@ -362,8 +362,11 @@ PREFERRED_CHANNELS = ["football_actuality10", "kayfa1x_2", "kayfa1x", "myintthuh
                       "mouhamedfoot333", "zzcombs3", "koglogrgorden"]
 PREFERRED_LINKS = ["https://vt.tiktok.com/ZSgyS93uw/"]
 
+NEW_LEAGUES = ("uefa.europa", "uefa.europa.conf")      # added to existing lists once
 DEFAULT_LEAGUES = [
     {"name": "UEFA Champions League", "code": "uefa.champions"},
+    {"name": "UEFA Europa League", "code": "uefa.europa"},
+    {"name": "UEFA Conference League", "code": "uefa.europa.conf"},
     {"name": "Spanish LaLiga", "code": "esp.1"},
     {"name": "English Premier League", "code": "eng.1"},
     {"name": "Italian Serie A", "code": "ita.1"},
@@ -437,10 +440,29 @@ class ChannelStore(object):
         except (TypeError, ValueError):
             self.last_visit = 0
         self.extra = dict((k, v) for k, v in data.items() if k not in _STORE_KEYS)
+        added = self._add_new_leagues()
         if int(self.extra.get("preferred_seed") or 0) < PREFERRED_SEED:
             self._seed_preferred()
-        elif not os.path.exists(self.path):
+        elif added or not os.path.exists(self.path):
             self.save()
+
+    def _add_new_leagues(self):
+        """Leagues added to the defaults after a list was saved (once each)."""
+        done = set(self.extra.get("leagues_added") or [])
+        codes = [l["code"] for l in self.leagues]
+        changed = False
+        for i, league in enumerate(DEFAULT_LEAGUES):
+            if league["code"] in NEW_LEAGUES and league["code"] not in done:
+                if league["code"] not in codes:
+                    before = DEFAULT_LEAGUES[i - 1]["code"] if i else None
+                    at = codes.index(before) + 1 if before in codes else len(codes)
+                    self.leagues.insert(at, dict(league))
+                    codes.insert(at, league["code"])
+                done.add(league["code"])
+                changed = True
+        if changed:
+            self.extra["leagues_added"] = sorted(done)
+        return changed
 
     def _seed_preferred(self):
         """Put the preferred channels at the top of the list (once)."""

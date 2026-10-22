@@ -29,7 +29,7 @@ from .images import HAVE_PIL, ImageCache
 
 LABELS = ("card_scores", "score_tag", "score_title", "score_page", "card_post", "author", "meta",
           "badge", "caption", "tags", "music", "tab_cur", "tab_line", "tab_side", "pill",
-          "center_msg", "likes", "comments", "shares", "views", "position", "card_next",
+          "center_msg", "likes", "comments", "shares", "views", "position", "credit", "card_next",
           "next_title", "status", "card_keys", "key_red_dot", "key_red", "key_green_dot",
           "key_green", "key_yellow_dot", "key_yellow", "key_blue_dot", "key_blue", "key_hint",
           "card_nav", "nav_up_txt", "nav_down_txt", "nav_side_txt")
@@ -192,6 +192,8 @@ class SimplyScoresFeed(Screen):
         self["key_yellow"].setText("Video list")
         self["key_blue"].setText("Channels")
         self["key_hint"].setText("OK pause    INFO clean    MENU setup")
+        from . import AUTHOR, VERSION
+        self["credit"].setText("SimplyScores v%s · by %s" % (VERSION, AUTHOR))
         self["nav_up_txt"].setText("Previous video (newer)")
         self["nav_down_txt"].setText("Next video (older)")
         self["nav_side_txt"].setText("Switch channel tab")

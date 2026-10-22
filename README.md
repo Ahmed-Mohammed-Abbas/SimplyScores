@@ -116,7 +116,7 @@ The handles were checked against the leagues' own websites and press coverage in
 **By file:** edit `/etc/enigma2/simplyscores.json` (created on first start) and add
 entries to `tiktok_channels`, e.g. `{"name": "My channel", "username": "somechannel", "enabled": true}`.
 Leagues for the scores panel live in `score_leagues` (ESPN codes such as `eng.1`,
-`esp.1`, `ita.1`, `ger.1`, `fra.1`, `uefa.champions`). The file format of the original
+`esp.1`, `ita.1`, `ger.1`, `fra.1`, `uefa.champions`, `uefa.europa`, `uefa.europa.conf`). The file format of the original
 plan is accepted as-is.
 
 ## How it works

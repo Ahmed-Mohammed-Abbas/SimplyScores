@@ -19,7 +19,7 @@ world = harness.install()
 import requests  # noqa: E402
 from enigma import iPlayableService, iServiceInformation  # noqa: E402
 from SimplyScores import api_scores, core, diagnose, gui, net, src_tikwm, src_tiktok  # noqa: E402
-from SimplyScores import plugin  # noqa: E402  (defines config.plugins.simplyscores)
+from SimplyScores import VERSION, plugin  # noqa: E402  (defines config.plugins.simplyscores)
 from SimplyScores.feed import FeedManager  # noqa: E402
 from SimplyScores.proxy import StreamProxy  # noqa: E402
 from SimplyScores.sources import Sources  # noqa: E402
@@ -367,7 +367,8 @@ scr.sources.h264_only = False
 
 acts["green"]()
 settle(lambda: not scr.score_loading)
-check(cfg.league_index.value == 1 and scr["score_title"].getText() == "Spanish LaLiga", "GREEN = next league")
+check(cfg.league_index.value == 1 and scr["score_title"].getText() == "UEFA Europa League", "GREEN = next league")
+check(scr["credit"].getText() == "SimplyScores v%s · by reali22" % VERSION, "version and author before the clock")
 fire(scr.pageTimer)
 
 acts["yellow"]()

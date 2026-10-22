@@ -45,6 +45,17 @@ check(again.get("zzcombs3") is None and not again.get("ligue1")["preferred"], "t
 check(again.add("newchan", preferred=True) and [c["username"] for c in again.channels].index("newchan") == 7,
       "a new preferred channel goes after the other preferred ones")
 
+# --------------------------------------------------------------------------- new leagues, once
+lpath = os.path.join(harness.TMP, "leagues.json")
+old_leagues = [l for l in core.DEFAULT_LEAGUES if l["code"] not in core.NEW_LEAGUES]
+json.dump({"tiktok_channels": [], "score_leagues": old_leagues, "preferred_seed": 1}, open(lpath, "w"))
+ls = core.ChannelStore(lpath)
+check([l["code"] for l in ls.leagues][:4] == ["uefa.champions", "uefa.europa", "uefa.europa.conf", "esp.1"],
+      "Europa and Conference League added after the Champions League")
+ls.leagues = [l for l in ls.leagues if l["code"] != "uefa.europa.conf"]
+ls.save()
+check("uefa.europa.conf" not in [l["code"] for l in core.ChannelStore(lpath).leagues], "a removed league stays removed")
+
 # --------------------------------------------------------------------------- For You order
 fm = FeedManager(os.path.join(harness.TMP, "fm_pref"))
 fm.videos = {"a": [{"id": "1", "user": "a", "created": 100}, {"id": "2", "user": "a", "created": 300}],
