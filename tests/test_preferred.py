@@ -76,6 +76,33 @@ scr.nextTab()
 check(scr.clips and all(v["user"] == scr.tabs[1][0] for v in scr.clips), "a channel tab shows only that channel")
 scr.prevTab()
 
+# the image's own seek / PVR-state pop-up (Egami shows it in the middle of the screen)
+from Screens.InfoBar import InfoBar  # noqa: E402
+
+
+class _Dialog(object):
+    def __init__(self, cls):
+        self.shown = True
+        self.__class__ = type(cls, (_Dialog,), {})
+
+    def hide(self):
+        self.shown = False
+
+
+class _Bar(object):
+    pass
+
+
+bar = _Bar()
+bar.pvrStateDialog = _Dialog("PVRState")
+bar.seekPopup = _Dialog("InfoBarSeekPopup")
+bar.secondInfoBarScreen = _Dialog("SecondInfoBar")
+InfoBar.instance = bar
+fire(scr.tickTimer)
+check(not bar.pvrStateDialog.shown and not bar.seekPopup.shown, "image's seek bar hidden over the feed")
+check(bar.secondInfoBarScreen.shown, "other InfoBar screens left alone")
+InfoBar.instance = None
+
 # arrow-key helper
 check(scr["nav_up_txt"].getText() == "Previous video (newer)" and scr["nav_down_txt"].getText() == "Next video (older)"
       and scr["nav_side_txt"].getText() == "Switch channel tab", "arrow-key helper labels")

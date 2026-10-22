@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """TikTok-style vertical feed: one clip at a time, newest first, with live scores."""
+import re
 import threading
 import time
 
@@ -36,6 +37,9 @@ PIXMAPS = ("cover", "avatar", "follow_icon", "like_icon", "comment_icon", "share
            "views_icon", "disc_icon", "music_icon", "pause_icon", "nav_up", "nav_down", "nav_left",
            "nav_right")
 UPNEXT_ROWS = 2
+# pop-ups of the image's InfoBar that must not cover the feed (seek bar, PVR/timeshift state)
+OVERLAY_RE = re.compile(r"pvrstate|seekstate|seekbar|seek_?popup|timeshiftstate|ptsseek|infobarseek|movieplayerstate",
+                        re.I)
 
 SCORE_ROWS = 6
 CAPTION_TOP, CAPTION_HEIGHT = 734, 166   # must match the skin
@@ -537,12 +541,35 @@ class SimplyScoresFeed(Screen):
         self.started = time.time()
         self.waiting = True
         self.session.nav.playService(ref)
+        self.hideImageOverlays()
         self.seen_top = max(self.seen_top, v.get("created", 0))
         self.updatePill()
+
+    def hideImageOverlays(self):
+        """The image's own InfoBar sits under the plugin and reacts to the clips it plays:
+        Egami (and some other images) pop up their seek/PVR-state bar in the middle of
+        the screen. Hide those pop-ups while the feed is open."""
+        try:
+            from Screens.InfoBar import InfoBar
+            bar = InfoBar.instance
+        except Exception:
+            return
+        if bar is None:
+            return
+        for name, dialog in list(vars(bar).items()):
+            if dialog is self or not hasattr(dialog, "hide") or not getattr(dialog, "shown", False):
+                continue
+            kind = "%s %s %s" % (name, dialog.__class__.__name__, getattr(dialog, "skinName", ""))
+            if OVERLAY_RE.search(kind):
+                try:
+                    dialog.hide()
+                except Exception:
+                    pass
 
     def onTick(self):
         if not self.alive:
             return
+        self.hideImageOverlays()
         if self.pending_links and time.time() - self.links_started > LINK_TIMEOUT:
             self.pending_links = None
             self.linkFailed("TikTok didn't send the clip's links within %d s" % LINK_TIMEOUT)
@@ -580,6 +607,7 @@ class SimplyScoresFeed(Screen):
                 self.onPlayError("no picture within %d s" % START_TIMEOUT)
 
     def onVideoInfo(self):
+        self.hideImageOverlays()
         service = self.session.nav.getCurrentService()
         info = service and service.info()
         if not info:
